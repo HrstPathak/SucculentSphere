@@ -1,4 +1,4 @@
-// File: D:\Succulent Sphere Website\src\app\collections\succulents\page.tsx
+// File: C:\Users\AGM\Desktop\plant\SucculentSphere\src\app\collections\succulents\page.tsx
 import * as entry from '../../../../../src/app/collections/succulents/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

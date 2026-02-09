@@ -5,21 +5,21 @@ export default function TrustBar() {
         <span className="text-[var(--color-brand)]">📦</span>
         <div>
           <div className="font-semibold">Safe Shipping</div>
-          <div className="text-sm">Our plants arrive healthy and well-packaged</div>
+          <div className="text-sm hidden sm:block">Our plants arrive healthy and well-packaged</div>
         </div>
       </div>
       <div className="flex items-center gap-3">
         <span className="text-[var(--color-brand)]">🌿</span>
         <div>
           <div className="font-semibold">Healthy Plant Guarantee</div>
-          <div className="text-sm">30-day guarantee on all plants</div>
+          <div className="text-sm hidden sm:block">30-day guarantee on all plants</div>
         </div>
       </div>
       <div className="flex items-center gap-3">
         <span className="text-[var(--color-brand)]">⚡</span>
         <div>
           <div className="font-semibold">24/7 Support</div>
-          <div className="text-sm">We're here to help</div>
+          <div className="text-sm hidden sm:block">We're here to help</div>
         </div>
       </div>
     </div>

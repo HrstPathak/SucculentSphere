@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 :root{
+  --background-color: white;
+  --color-brand: #344E41;
+  --color-secondary: #A3B18A;
+  --color-accent: #CB997E;
+  --color-bg: #F5F3EF;
+  --color-text: #2B2B2B;
+}
+:root[data-theme="dark"] {
+  --background-color: black;
   --color-brand: #344E41;
   --color-secondary: #A3B18A;
   --color-accent: #CB997E;
@@ -10,8 +19,11 @@
   --color-text: #2B2B2B;
 }
 
-html,body,#root{
-  height:100%;
+html, body {
+  height: 100%;
+  background-color: var(--background-color);
+  color: var(--color-text);
+  font-family: inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 body {

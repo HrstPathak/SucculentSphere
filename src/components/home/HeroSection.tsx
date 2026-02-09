@@ -22,7 +22,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full h-[80vh] min-h-[500px] overflow-hidden">
+    <section className="relative w-full h-[50vh] min-h-[500px] overflow-hidden">
 
       {/* Background Carousel */}
       {/* <AnimatePresence mode="wait">
@@ -49,7 +49,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/20" />
 
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
+      <div className="relative z-10 container mx-auto px-4 h-full flex items-center t-35">
         <div className="max-w-xl text-[var(--color-text)]">
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight mb-4">

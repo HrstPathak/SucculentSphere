@@ -59,12 +59,11 @@ export default function SucculentsPage() {
 
       <section className="bg-[var(--color-bg)] py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-serif text-center mb-2">Succulent Plants</h1>
-          <p className="text-center max-w-2xl mx-auto mb-6">Handpicked premium succulents to enrich your home and workspace.</p>
-          <p className="text-sm text-center max-w-3xl mx-auto mb-6">Succulents are low-maintenance, drought-tolerant plants perfect for modern interiors. Browse a curated selection of premium varieties and elegant planters.</p>
+          <h1 className="text-4xl font-serif text-center mb-2 mt-5">Succulent Plants</h1>
+          <p className="text-center max-w-2xl mx-auto mb-6 text-sm">Handpicked premium succulents to enrich your home and workspace.</p>
 
           {/* Breadcrumb */}
-          <nav className="text-sm mb-6" aria-label="Breadcrumb">
+          <nav className="text-xs" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2 text-[var(--color-text)]">
               <li><Link href="/">Home</Link></li>
               <li>›</li>
@@ -75,8 +74,9 @@ export default function SucculentsPage() {
           </nav>
 
           {/* Toolbar */}
-          <div className="sticky top-24 bg-[var(--color-bg)] py-4 z-20">
-            <div className="flex items-center justify-between gap-4">
+          <div className="sticky bg-[var(--color-bg)] py-4 z-20" style={{ top: "60px" }}>
+            <div className="flex items-center justify-between gap-4 p-2 rounded-md bg-[#e0dcda]">
+
               <div className="flex items-center gap-3">
                 <FilterDrawer />
               </div>

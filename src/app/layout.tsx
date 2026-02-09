@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en"  data-theme="dark">
       <Head>
         {/* Preload fonts (replace with optimized font files or Next/font in next steps) */}
         <link
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <meta name="theme-color" content="#F5F3EF" />
       </Head>
-      <body>
+      <body className="bg-[var(--background-color)]">
         <Providers>
           <Header />
           <main>{children}</main>
