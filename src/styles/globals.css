@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --color-brand: #344E41;
+  --color-secondary: #A3B18A;
+  --color-accent: #CB997E;
+  --color-bg: #F5F3EF;
+  --color-text: #2B2B2B;
+}
+
+html,body,#root{
+  height:100%;
+}
+
+body {
+  @apply bg-[var(--color-bg)] text-[var(--color-text)] font-sans leading-relaxed;
+}
+
+.section-padding-desktop { padding: 80px 0; }
+.section-padding-tablet { padding: 50px 0; }
+.section-padding-mobile { padding: 32px 0; }
+
+/* Focus states for accessibility */
+button:focus, a:focus {
+  outline: 3px solid rgba(52,78,65,0.15);
+  outline-offset: 2px;
+}
