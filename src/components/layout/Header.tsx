@@ -64,7 +64,7 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between" style={{ height: 64 }}>
         <Link href="/" aria-label="Succulent Sphere home" className="flex items-center">
-          <span className="text-lg font-serif text-brand-900">Succulent Sphere</span>
+          <span className="hidden md:flex text-lg font-serif text-brand-900">Succulent Sphere</span>
         </Link>
 
         <nav aria-label="Primary" className="hidden md:flex gap-6 text-sm items-center">
