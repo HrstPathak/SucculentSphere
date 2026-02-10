@@ -1,8 +1,24 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function FilterDrawer() {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    if (open) {
+      document.addEventListener("keydown", onKey);
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.removeEventListener("keydown", onKey);
+        document.body.style.overflow = prev;
+      };
+    }
+    return;
+  }, [open]);
 
   return (
     <>
@@ -18,14 +34,15 @@ export default function FilterDrawer() {
       {open && (
         <div
           id="filters-drawer"
-          className="fixed inset-0 z-50 bg-black/40 flex"
+          className="fixed left-0 right-0 z-50 bg-black/40 flex"
+          style={{ top: "60px", height: "calc(100% - 60px)" }}
           role="dialog"
           aria-modal="true"
         >
-          <aside className="bg-white w-80 max-w-full p-6 overflow-auto">
+          <aside className="bg-white w-80 max-w-full p-6 overflow-auto h-full">
             <div className="flex items-center justify-between mb-4">
               <h4 className="font-semibold">Filters</h4>
-              <button onClick={() => setOpen(false)} aria-label="Close filters">Close</button>
+              <button type="button" onClick={() => setOpen(false)} aria-label="Close filters" className="text-sm px-2 py-1 rounded hover:bg-gray-100">Close</button>
             </div>
 
             <div className="space-y-4">

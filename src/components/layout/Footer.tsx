@@ -22,7 +22,7 @@ export default function Footer() {
           <h4 className="font-semibold mb-2">Company</h4>
           <ul className="text-sm space-y-1">
             <li><Link href="/about">About Us</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/contact#contact">Contact</Link></li>
           </ul>
         </div>
 

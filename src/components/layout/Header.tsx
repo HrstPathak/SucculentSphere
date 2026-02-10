@@ -8,6 +8,7 @@ import SearchBar from "../ui/SearchBar";
 import MobileDrawer from "./MobileDrawer";
 // Inline SVG icons to avoid external dependency during development
 import DarkModeToggle from "../ui/DarkModeToggle";
+import { color } from "framer-motion";
 
 function MenuIcon({ size = 22, color = "#2B2B2B" }: { size?: number; color?: string }) {
   return (
@@ -64,16 +65,16 @@ export default function Header() {
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between" style={{ height: 64 }}>
         <Link href="/" aria-label="Succulent Sphere home" className="flex items-center">
-          <span className="hidden md:flex text-lg font-serif text-brand-900">Succulent Sphere</span>
+          <span className="hidden md:flex text-lg font-serif text-brand-900" style={{ color: "#002704" }} >Succulent Sphere</span>
         </Link>
 
         <nav aria-label="Primary" className="hidden md:flex gap-6 text-sm items-center">
-          {[
+            {[
             { href: "/shop", label: "Shop" },
             { href: "/collections/succulents", label: "Collections" },
             { href: "/plant-care", label: "Plant Care" },
             { href: "/about", label: "About Us" },
-            { href: "/contact", label: "Contact" }
+            { href: "/contact#contact", label: "Contact" }
           ].map((item) => {
             const active = pathname === item.href || pathname?.startsWith(item.href + "/");
             return (

@@ -1,6 +1,0 @@
-{
-  "/not-found": "app/not-found.js",
-  "/page": "app/page.js",
-  "/cart/page": "app/cart/page.js",
-  "/collections/succulents/page": "app/collections/succulents/page.js"
-}
