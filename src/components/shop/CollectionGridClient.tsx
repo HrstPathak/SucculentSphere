@@ -27,18 +27,19 @@ export default function CollectionGridClient({ products }: { products: Product[]
 
   return (
     <>
-      <div className="sticky bg-[var(--color-bg)] py-5 z-20" style={{ top: "60px" }}>
-        <div className="flex items-center justify-between gap-4 px-4 py-3">
+      <div className="sticky bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-4 z-20 shadow-sm" style={{ top: "60px" }}>
+        <div className="flex items-center justify-between gap-4 px-4">
           <div className="flex items-center gap-3">
             <FilterDrawer />
           </div>
-          <div className="ml-auto">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">Sort by</span>
             <SortDropdown value={sort} onChange={setSort} />
           </div>
         </div>
       </div>
 
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 px-4">
+      <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 px-4 pb-12">
         {sorted.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
