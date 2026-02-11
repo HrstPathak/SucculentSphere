@@ -11,8 +11,11 @@ export async function GET(req: Request) {
 
   try {
     // If Shopify env is configured, attempt to fetch; otherwise fallback to mocks
-    const shopDomain = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
-    const token = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API;
+    const shopDomain = process.env.SHOPIFY_STORE_DOMAIN || process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
+    const token =
+      process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
+      process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
+      process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API;
     if (shopDomain && token) {
       const products = await fetchProductsByQuery(q, 6);
       // Normalize shape to { title, handle, price, image }
@@ -22,7 +25,7 @@ export async function GET(req: Request) {
           id: node.id,
           title: node.title,
           handle: node.handle,
-          price: node.variants?.edges?.[0]?.node?.price ?? null,
+          price: node.variants?.edges?.[0]?.node?.priceV2?.amount ?? null,
           image: node.images?.edges?.[0]?.node?.url ?? null
         };
       });
