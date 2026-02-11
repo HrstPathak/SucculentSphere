@@ -15,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link href={`/collections/succulents/${product.handle}`} aria-label={`View ${product.title} details`} className="group">
       <article
-        className="bg-white rounded-lg overflow-hidden shadow-sm transform transition-transform duration-200 group-hover:scale-105"
+        className="bg-white rounded-lg overflow-hidden shadow-sm transform transition-transform duration-200 md:group-hover:scale-105"
         tabIndex={0}
         aria-labelledby={`product-${product.id}`}
       >
@@ -33,7 +33,7 @@ export default function ProductCard({ product }: { product: Product }) {
             <span className="absolute top-3 left-3 bg-[var(--color-accent)] text-white text-xs px-2 py-1 rounded">{product.badge}</span>
           )}
           {/* Hover overlay */}
-          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity bg-black/30 flex items-end p-4">
+          <div className="absolute inset-0 opacity-0 md:group-hover:opacity-100 focus-within:opacity-100 transition-opacity bg-black/30 flex items-end p-4">
             <div className="w-full text-white">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">

@@ -13,32 +13,32 @@ import { color } from "framer-motion";
 function MenuIcon({ size = 22, color = "#2B2B2B" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M4 6h16M4 12h16M4 18h16" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 6h16M4 12h16M4 18h16" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
     </svg>
   );
 }
 function SearchIcon({ size = 22, color = "#2B2B2B" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M21 21l-4.35-4.35" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="11" cy="11" r="6" stroke={color} strokeWidth="1.6" />
+      <path d="M21 21l-4.35-4.35" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+      <circle cx="11" cy="11" r="6" strokeWidth="1.6" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
     </svg>
   );
 }
 function CartIcon({ size = 22, color = "#2B2B2B" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M6 6h15l-1.5 9h-11z" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="9" cy="20" r="1" fill={color} />
-      <circle cx="18" cy="20" r="1" fill={color} />
+      <path d="M6 6h15l-1.5 9h-11z" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+      <circle cx="9" cy="20" r="1" style={{ fill: "var(--icon-color, #2B2B2B)" }} />
+      <circle cx="18" cy="20" r="1" style={{ fill: "var(--icon-color, #2B2B2B)" }} />
     </svg>
   );
 }
 function UserIcon({ size = 22, color = "#2B2B2B" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12" cy="7" r="4" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+      <circle cx="12" cy="7" r="4" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
     </svg>
   );
 }
@@ -166,11 +166,15 @@ export default function Header() {
         {mobileSearchOpen && (
           <div className="fixed inset-0 z-50">
             <div className="absolute inset-0 bg-black/40" onClick={() => setMobileSearchOpen(false)} />
-            <div className="absolute top-0 left-0 right-0 bg-white p-4 transform transition-transform duration-300" style={{ transform: "translateY(0)" }}>
-              <div className="flex items-center gap-2">
-                <SearchBar />
-                <button className="p-2" aria-label="Close search" onClick={() => setMobileSearchOpen(false)}>
-                  ❌
+            <div className="absolute top-0 left-0 right-0 bg-white dark:bg-[#071018] p-4 transform transition-transform duration-300" style={{ transform: "translateY(0)" }}>
+              <div className="flex-1 flex items-center gap-2">
+                <div className="flex-1">
+                  <SearchBar />
+                </div>
+                <button className="p-2 flex-shrink-0" aria-label="Close search" onClick={() => setMobileSearchOpen(false)}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M18 6L6 18M6 6l12 12" stroke="var(--icon-color, #2B2B2B)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </button>
               </div>
             </div>

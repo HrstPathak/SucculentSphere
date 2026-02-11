@@ -10,15 +10,16 @@ const categories = [
 export default function CategoryGrid() {
   return (
     <section aria-labelledby="shop-by-category">
-      <h2 id="shop-by-category" className="text-xl font-serif text-center mb-6">Shop by Category</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <h2 id="shop-by-category" className="text-3xl md:text-4xl font-serif text-center mb-4 text-[var(--color-text)]">Shop by Category</h2>
+      <p className="text-center text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">Discover our curated collections of premium plants and accessories</p>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         {categories.map((c) => (
-          <a key={c.title} href={c.href} className="block rounded-lg overflow-hidden shadow-sm hover:scale-105 transition-transform duration-300">
-            <div className="relative h-40">
-              <Image src={c.img} alt={c.title} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 50vw, 25vw" />
+          <a key={c.title} href={c.href} className="group block rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-gray-100 dark:border-gray-700">
+            <div className="relative h-48 md:h-56 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-50 dark:from-gray-800 dark:to-gray-700">
+              <Image src={c.img} alt={c.title} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 50vw, 25vw" className="group-hover:scale-110 transition-transform duration-500" />
             </div>
-            <div className="p-4 bg-white">
-              <h3 className="text-sm text-center">{c.title}</h3>
+            <div className="p-5 bg-white dark:bg-[#0a1420] text-center border-t border-gray-50 dark:border-gray-700">
+              <h3 className="text-base md:text-lg font-semibold text-[var(--color-text)]">{c.title}</h3>
             </div>
           </a>
         ))}

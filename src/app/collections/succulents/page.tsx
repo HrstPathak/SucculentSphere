@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { mockProducts } from "../../../data/mockProducts";
@@ -6,8 +8,6 @@ import FilterDrawer from "../../../components/shop/FilterDrawer";
 import SortDropdown from "../../../components/shop/SortDropdown";
 import Pagination from "../../../components/shop/Pagination";
 import TrustBar from "../../../components/TrustBar";
-
-export const revalidate = 86400;
 
 function buildBreadcrumbJson() {
   return {
@@ -40,8 +40,31 @@ function buildCollectionJson(products: any[]) {
   };
 }
 
+function sortProducts(products: any[], sortBy: string) {
+  const sorted = [...products];
+  
+  switch (sortBy) {
+    case "price_asc":
+      return sorted.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+    case "price_desc":
+      return sorted.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    case "newest":
+      // Reverse order simulates newest first
+      return sorted.reverse();
+    case "best_selling":
+      // Sort by rating (proxy for best selling)
+      return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    case "featured":
+    default:
+      // Keep original order (featured)
+      return products;
+  }
+}
+
 export default function SucculentsPage() {
-  const products = mockProducts;
+  const [sort, setSort] = useState("featured");
+  const rawProducts = mockProducts;
+  const products = sortProducts(rawProducts, sort);
 
   const breadcrumbJson = buildBreadcrumbJson();
   const collectionJson = buildCollectionJson(products);
@@ -75,13 +98,13 @@ export default function SucculentsPage() {
 
           {/* Toolbar */}
           <div className="sticky bg-[var(--color-bg)] py-4 z-20" style={{ top: "60px" }}>
-            <div className="flex items-center justify-between gap-4 p-2 rounded-md bg-[#e0dcda]">
+            <div className="flex items-center justify-between gap-4 p-2 rounded-md bg-[#e0dcda] dark:bg-[#0a1420]">
 
               <div className="flex items-center gap-3">
                 <FilterDrawer />
               </div>
               <div className="ml-auto">
-                <SortDropdown />
+                <SortDropdown value={sort} onChange={setSort} />
               </div>
             </div>
           </div>

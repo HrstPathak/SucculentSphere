@@ -13,25 +13,39 @@ export default function Home() {
     <>
       <header />
       <HeroSection />
-      <section className="container mx-auto px-4 section-padding-mobile md:section-padding-tablet lg:section-padding-desktop">
-        <CategoryGrid />
+      
+      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-transparent via-[var(--color-bg)] to-transparent">
+        <div className="container mx-auto px-4">
+          <CategoryGrid />
+        </div>
       </section>
 
-      <section className="container mx-auto px-4 section-padding-mobile md:section-padding-tablet lg:section-padding-desktop">
-        <h2 className="text-2xl font-serif text-center mb-8">Best Sellers</h2>
-        <BestSellerGrid products={mockProducts} />
+      <section className="py-16 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif text-center text-[var(--color-text)]">Best Sellers</h2>
+            <p className="text-center text-gray-600 dark:text-gray-400 mt-2">Handpicked favorites loved by our customers</p>
+          </div>
+          <BestSellerGrid products={mockProducts} />
+        </div>
       </section>
 
-      <section className="container mx-auto px-4 section-padding-mobile md:section-padding-tablet lg:section-padding-desktop">
-        <BrandStory />
+      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-r from-[var(--color-bg)] to-transparent">
+        <div className="container mx-auto px-4">
+          <BrandStory />
+        </div>
       </section>
 
-      <section className="container mx-auto px-4 section-padding-mobile md:section-padding-tablet lg:section-padding-desktop">
-        <InstagramFeed />
+      <section className="py-16 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4">
+          <InstagramFeed />
+        </div>
       </section>
 
-      <section className="container mx-auto px-4 section-padding-mobile md:section-padding-tablet lg:section-padding-desktop">
-        <Testimonials />
+      <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-transparent to-[var(--color-bg)]">
+        <div className="container mx-auto px-4">
+          <Testimonials />
+        </div>
       </section>
     </>
   );
