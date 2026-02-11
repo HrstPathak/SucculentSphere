@@ -27,8 +27,8 @@ export default function CollectionGridClient({ products }: { products: Product[]
 
   return (
     <>
-      <div className="sticky bg-[var(--color-bg)] py-4 z-20" style={{ top: "60px" }}>
-        <div className="flex items-center justify-between gap-4 p-2 rounded-md bg-[#e0dcda]">
+      <div className="sticky bg-[var(--color-bg)] py-5 z-20" style={{ top: "60px" }}>
+        <div className="flex items-center justify-between gap-4 px-4 py-3">
           <div className="flex items-center gap-3">
             <FilterDrawer />
           </div>
