@@ -66,10 +66,10 @@ export default function Dropdown({
           aria-haspopup="menu"
           aria-expanded={open}
           onClick={() => setOpen((s) => !s)}
-          className="inline-flex justify-center items-center gap-2 rounded border px-3 py-2 bg-white text-sm shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)]"
+          className="inline-flex justify-center items-center gap-2 rounded-xl border px-4 py-2 bg-white dark:bg-[#0a1420] text-[var(--color-text)] border-gray-300 dark:border-gray-600 text-sm font-medium shadow-sm hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md dark:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--color-brand)] focus:ring-offset-1 dark:focus:ring-offset-[#071018] transition-all duration-200"
         >
-          <span className="text-sm">{options.find((o) => o.value === value)?.label ?? "Sort"}</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="opacity-70">
+          <span className="text-sm font-medium">{options.find((o) => o.value === value)?.label ?? "Sort"}</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="opacity-70 transition-transform" style={{ transform: open ? "rotateZ(180deg)" : "rotateZ(0deg)" }}>
             <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
@@ -81,7 +81,7 @@ export default function Dropdown({
           role="menu"
           tabIndex={-1}
           onKeyDown={onKeyDown}
-          className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+          className="absolute right-0 mt-3 w-56 origin-top-right divide-y divide-gray-100 dark:divide-gray-700 rounded-xl bg-white dark:bg-[#0a1420] shadow-xl dark:shadow-2xl ring-1 ring-gray-200 dark:ring-gray-700 focus:outline-none z-50"
         >
           {options.map((opt) => {
             const active = opt.value === value;
@@ -103,7 +103,11 @@ export default function Dropdown({
                     setOpen(false);
                   }
                 }}
-                className={`px-4 py-2 text-sm cursor-pointer ${active ? "bg-[var(--color-brand)] text-white" : "text-[var(--color-text)] hover:bg-gray-50"}`}
+                className={`px-4 py-3 text-sm cursor-pointer transition-colors font-medium ${
+                  active 
+                    ? "bg-[var(--color-brand)] text-white" 
+                    : "text-[var(--color-text)] hover:bg-gray-50 dark:hover:bg-[#0f1f2e]"
+                }`}
               >
                 {opt.label}
               </li>

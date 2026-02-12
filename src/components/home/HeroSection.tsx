@@ -22,7 +22,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full h-[80vh] min-h-[500px] overflow-hidden">
+    <section className="relative w-full h-[50vh] min-h-[500px] overflow-hidden">
 
       {/* Background Carousel */}
       {/* <AnimatePresence mode="wait">
@@ -49,28 +49,28 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-black/20" />
 
       {/* Hero Content */}
-      <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-        <div className="max-w-xl text-[var(--color-text)]">
+      <div className="relative z-10 container mx-auto px-4 h-full flex items-center t-35">
+        <div className="max-w-2xl text-[var(--color-text)]">
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight mb-4">
-            Elevate Your Space With Living Art
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif leading-tight mb-6 tracking-tight" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
+            Elevate Your Space<br /> With Living Art
           </h1>
 
-          <p className="text-lg mb-6">
-            Handpicked premium succulents & plant décor
+          <p className="text-lg md:text-xl mb-8 max-w-md leading-relaxed text-opacity-90" style={{ textShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+            Handpicked premium succulents & plant décor for the modern home
           </p>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-wrap">
             <Link
               href="/collections/succulents"
-              className="bg-[var(--color-brand)] text-white px-6 py-3 rounded shadow"
+              className="bg-[var(--color-brand)] hover:brightness-110 text-white px-8 py-3 rounded-xl shadow-lg hover:shadow-xl font-medium transition-all duration-200 transform hover:scale-105"
             >
               Shop Collection
             </Link>
 
             <Link
               href="/plant-care"
-              className="border border-gray-400 px-6 py-3 rounded backdrop-blur-sm bg-white/60"
+              className="border-2 border-[var(--color-text)] text-[var(--color-text)] px-8 py-3 rounded-xl hover:bg-[var(--color-text)] hover:text-white font-medium transition-all duration-200 backdrop-blur-sm bg-white/10"
             >
               Explore Plant Care
             </Link>

@@ -10,9 +10,25 @@ export default function DarkModeToggle() {
     if (stored === "dark") {
       setMode("dark");
       document.documentElement.classList.add("dark");
-    } else {
+    } else if (stored === "light") {
       setMode("light");
       document.documentElement.classList.remove("dark");
+    } else if (typeof window !== "undefined" && window.matchMedia) {
+      // Respect system preference if user hasn't chosen
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (prefersDark) {
+        setMode("dark");
+        document.documentElement.classList.add("dark");
+        try {
+          localStorage.setItem("ss_theme", "dark");
+        } catch {}
+      } else {
+        setMode("light");
+        document.documentElement.classList.remove("dark");
+        try {
+          localStorage.setItem("ss_theme", "light");
+        } catch {}
+      }
     }
   }, []);
 
@@ -85,6 +101,7 @@ export default function DarkModeToggle() {
   return (
     <button
       ref={btnRef}
+      aria-pressed={mode === "dark"}
       aria-label={`Switch to ${mode === "dark" ? "light" : "dark"} mode`}
       onClick={toggle}
       className="p-2 rounded-full focus:outline-none"
@@ -93,15 +110,15 @@ export default function DarkModeToggle() {
     >
       {mode === "dark" ? (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path d="M12 3v2" stroke="#2B2B2B" strokeWidth="1.6" strokeLinecap="round" />
-          <path d="M12 19v2" stroke="#2B2B2B" strokeWidth="1.6" strokeLinecap="round" />
-          <path d="M4.2 4.2l1.4 1.4" stroke="#2B2B2B" strokeWidth="1.6" strokeLinecap="round" />
-          <path d="M18.4 18.4l1.4 1.4" stroke="#2B2B2B" strokeWidth="1.6" strokeLinecap="round" />
-          <circle cx="12" cy="12" r="4" stroke="#2B2B2B" strokeWidth="1.6" />
+          <path d="M12 3v2" strokeWidth="1.6" strokeLinecap="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+          <path d="M12 19v2" strokeWidth="1.6" strokeLinecap="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+          <path d="M4.2 4.2l1.4 1.4" strokeWidth="1.6" strokeLinecap="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+          <path d="M18.4 18.4l1.4 1.4" strokeWidth="1.6" strokeLinecap="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
+          <circle cx="12" cy="12" r="4" strokeWidth="1.6" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
         </svg>
       ) : (
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke="#2B2B2B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "var(--icon-color, #2B2B2B)" }} />
         </svg>
       )}
     </button>

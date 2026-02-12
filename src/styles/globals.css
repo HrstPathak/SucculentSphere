@@ -8,7 +8,32 @@
   --color-accent: #CB997E;
   --color-bg: #F5F3EF;
   --color-text: #2B2B2B;
+  --icon-color: #2B2B2B;
 }
+
+/* Dark mode variables */
+.dark {
+  --color-brand: #8FBF94; /* lighter brand on dark */
+  --color-secondary: #9BB892;
+  --color-accent: #BFA089;
+  --color-bg: #071018; /* deep, slightly teal-black */
+  --color-text: #E7F6EE; /* soft, light text */
+  --icon-color: #E7F6EE; /* light icons in dark mode */
+}
+
+/* Make typical white cards and surfaces use the dark background and subtle borders in dark mode */
+.dark .bg-white { background-color: var(--color-bg) !important; }
+.dark .text-gray-700,
+.dark .text-gray-800,
+.dark .text-muted { color: rgba(231,246,238,0.9) !important; }
+.dark .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.6) !important; }
+.dark .border { border-color: rgba(255,255,255,0.04) !important; }
+.dark .bg-\[var\(--color-bg\)\] { background-color: var(--color-bg) !important; }
+
+/* Buttons on dark background: ensure readable */
+.dark .bg-\[var\(--color-brand\)\] { background-color: var(--color-brand) !important; color: var(--color-bg) !important; }
+.dark .text-\[var\(--color-brand\)\] { color: var(--color-brand) !important; }
+
 
 html,body,#root{
   height:100%;
