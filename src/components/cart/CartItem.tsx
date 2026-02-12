@@ -2,15 +2,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import QuantitySelector from "../product/QuantitySelector";
-import type { Product } from "../../data/mockProducts";
 import { useCallback } from "react";
+
+type CartItemShape = {
+  id: string;
+  title: string;
+  handle: string;
+  price: string;
+  image: string;
+  quantity: number;
+};
 
 export default function CartItem({
   item,
   onChangeQty,
   onRemove
 }: {
-  item: Product & { quantity: number };
+  item: CartItemShape;
   onChangeQty: (id: string, qty: number) => void;
   onRemove: (id: string) => void;
 }) {
@@ -18,13 +26,13 @@ export default function CartItem({
 
   return (
     <div className="bg-white rounded-lg p-4 shadow-sm flex gap-4 items-start">
-      <div className="w-24 h-24 relative flex-shrink-0">
+      <div className="w-24 h-24 relative flex-shrink-0 flex-shrink">
         <Link href={`/collections/succulents/${item.handle}`}>
           <Image src={item.image} alt={`${item.title} succulent`} fill style={{ objectFit: "cover" }} className="rounded" />
         </Link>
       </div>
-      <div className="flex-1">
-        <Link href={`/collections/succulents/${item.handle}`} className="text-sm font-semibold text-[var(--color-text)]">
+      <div className="flex-1 min-w-0">
+        <Link href={`/collections/succulents/${item.handle}`} className="text-sm font-semibold text-[var(--color-text)] block truncate">
           {item.title}
         </Link>
         <div className="text-sm text-gray-700 mt-2">${item.price}</div>
@@ -35,7 +43,7 @@ export default function CartItem({
           </button>
         </div>
       </div>
-      <div className="text-sm font-medium">${(Number(item.price) * item.quantity).toFixed(2)}</div>
+      <div className="text-sm font-medium ml-4 flex-shrink-0">${(Number(item.price) * item.quantity).toFixed(2)}</div>
     </div>
   );
 }

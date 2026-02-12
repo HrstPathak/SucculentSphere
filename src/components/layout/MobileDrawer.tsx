@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect } from "react";
+import DarkModeToggle from "../ui/DarkModeToggle";
 
 export default function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function MobileDrawer({ open, onClose }: { open: boolean; onClose
       />
 
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-72 bg-white transform transition-transform ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 z-50 h-full w-72 bg-white dark:bg-\[#071018\] transform transition-transform ${open ? "translate-x-0" : "-translate-x-full"}`}
         role="dialog"
         aria-modal="true"
       >
@@ -33,11 +34,19 @@ export default function MobileDrawer({ open, onClose }: { open: boolean; onClose
               { href: "/about", label: "About Us" },
               { href: "/contact", label: "Contact" }
             ].map((item) => (
-              <Link key={item.href} href={item.href} className="py-4 text-lg border-b border-gray-100" onClick={onClose}>
+              <Link key={item.href} href={item.href} className="py-4 text-lg border-b border-gray-100 dark:border-gray-700 text-gray-900 dark:text-gray-100" onClick={onClose}>
                 {item.label}
               </Link>
             ))}
           </nav>
+          
+          {/* Dark mode toggle */}
+          <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700">
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-gray-700 dark:text-gray-300">Dark Mode</span>
+              <DarkModeToggle />
+            </div>
+          </div>
         </div>
       </aside>
     </>

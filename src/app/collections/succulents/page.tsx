@@ -1,13 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { mockProducts } from "../../../data/mockProducts";
-import ProductCard from "../../../components/shop/ProductCard.tsx";
-import FilterDrawer from "../../../components/shop/FilterDrawer";
-import SortDropdown from "../../../components/shop/SortDropdown";
-import Pagination from "../../../components/shop/Pagination";
 import TrustBar from "../../../components/TrustBar";
+import CollectionGridClient from "../../../components/shop/CollectionGridClient";
+import { fetchProductsList } from "../../../lib/shopify";
 
-export const revalidate = 86400;
+export const revalidate = 60; // cache for 60s
 
 function buildBreadcrumbJson() {
   return {
@@ -34,14 +31,26 @@ function buildCollectionJson(products: any[]) {
       "image": p.image,
       "description": p.title,
       "brand": { "@type": "Brand", "name": "Succulent Sphere" },
-      "offers": { "@type": "Offer", "price": p.price, "priceCurrency": p.currency, "availability": "https://schema.org/InStock" },
-      "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating, "reviewCount": Math.round(p.rating * 10) }
+      "offers": { "@type": "Offer", "price": p.price, "priceCurrency": p.currency || "INR", "availability": "https://schema.org/InStock" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": p.rating || 4.5, "reviewCount": Math.round((p.rating || 4.5) * 10) }
     }))
   };
 }
 
-export default function SucculentsPage() {
-  const products = mockProducts;
+async function fetchShopifyProducts(limit = 24) {
+  return await fetchProductsList(limit);
+}
+
+export default async function SucculentsPage() {
+  let products = [];
+  try {
+    products = await fetchShopifyProducts(24);
+    console.log("Fetched Shopify products:", products.length);
+  } catch (e) {
+    console.error("Error fetching Shopify products:", e);
+  }
+
+  console.log("Products in page:", products);
 
   const breadcrumbJson = buildBreadcrumbJson();
   const collectionJson = buildCollectionJson(products);
@@ -59,12 +68,11 @@ export default function SucculentsPage() {
 
       <section className="bg-[var(--color-bg)] py-12">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-serif text-center mb-2">Succulent Plants</h1>
-          <p className="text-center max-w-2xl mx-auto mb-6">Handpicked premium succulents to enrich your home and workspace.</p>
-          <p className="text-sm text-center max-w-3xl mx-auto mb-6">Succulents are low-maintenance, drought-tolerant plants perfect for modern interiors. Browse a curated selection of premium varieties and elegant planters.</p>
+          <h1 className="text-4xl font-serif text-center mb-2 mt-5">Succulent Plants</h1>
+          <p className="text-center max-w-2xl mx-auto mb-6 text-sm">Handpicked premium succulents to enrich your home and workspace.</p>
 
           {/* Breadcrumb */}
-          <nav className="text-sm mb-6" aria-label="Breadcrumb">
+          <nav className="text-xs" aria-label="Breadcrumb">
             <ol className="flex items-center gap-2 text-[var(--color-text)]">
               <li><Link href="/">Home</Link></li>
               <li>›</li>
@@ -74,26 +82,10 @@ export default function SucculentsPage() {
             </ol>
           </nav>
 
-          {/* Toolbar */}
-          <div className="sticky top-24 bg-[var(--color-bg)] py-4 z-20">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <FilterDrawer />
-              </div>
-              <div className="ml-auto">
-                <SortDropdown />
-              </div>
-            </div>
+          {/* Toolbar - client controls will render inside the client grid */}
+          <div className="mt-6">
+            <CollectionGridClient products={products} />
           </div>
-
-          {/* Grid */}
-          <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 px-4">
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-
-          <Pagination page={1} total={2} />
 
           <TrustBar />
         </div>
@@ -101,4 +93,3 @@ export default function SucculentsPage() {
     </>
   );
 }
-

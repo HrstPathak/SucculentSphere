@@ -1,97 +1,103 @@
-const SHOP_DOMAIN = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN;
-const STOREFRONT_ACCESS_TOKEN = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API;
+const domain =
+  process.env.SHOPIFY_STORE_DOMAIN || process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN || "";
 
-async function storefrontFetch(query: string, variables = {}) {
-  if (!SHOP_DOMAIN || !STOREFRONT_ACCESS_TOKEN) {
-    throw new Error("Missing Shopify environment variables.");
-  }
+const token =
+  process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
+  process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
+  process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API ||
+  "";
 
-  const res = await fetch(`https://${SHOP_DOMAIN}/api/2024-07/graphql.json`, {
+const apiVersion = process.env.SHOPIFY_API_VERSION || process.env.NEXT_PUBLIC_SHOPIFY_API_VERSION || "2026-01";
+
+if (!domain || !token) {
+  console.warn(
+    "[shopify] Missing Shopify env vars. Checked SHOPIFY_STORE_DOMAIN / NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_ACCESS_TOKEN / NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN / NEXT_PUBLIC_SHOPIFY_STOREFRONT_API"
+  );
+}
+
+export async function shopifyFetch(query: string, variables: Record<string, any> = {}) {
+  const response = await fetch(`https://${domain}/api/${apiVersion}/graphql.json`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": STOREFRONT_ACCESS_TOKEN
+      "X-Shopify-Storefront-Access-Token": token,
     },
-    body: JSON.stringify({ query, variables })
+    body: JSON.stringify({ query, variables }),
+    cache: "no-store",
   });
 
-  const json = await res.json();
-  if (json.errors) {
-    throw new Error(JSON.stringify(json.errors));
+  const json = await response.json();
+  if (!response.ok) {
+    const msg = json?.errors ? JSON.stringify(json.errors) : response.statusText;
+    throw new Error(`[shopifyFetch] ${msg}`);
   }
-  return json.data;
+  return json;
 }
 
-export async function fetchCollections(limit = 10) {
-  const query = /* GraphQL */ `
-    query Collections($limit: Int!) {
-      collections(first: $limit) {
-        edges {
-          node {
-            id
-            title
-            handle
-            image { url altText }
+export async function fetchProductsByQuery(searchQuery: string, first = 6) {
+  const gql = `query ($q: String!, $first: Int!) {
+    products(query: $q, first: $first) {
+      edges {
+        node {
+          id
+          title
+          handle
+          images(first: 1) {
+            edges { node { url altText } }
+          }
+          variants(first: 1) {
+            edges { node { priceV2 { amount currencyCode } } }
           }
         }
       }
     }
-  `;
-  const data = await storefrontFetch(query, { limit });
-  return data.collections;
+  }`;
+
+  const res = await shopifyFetch(gql, { q: searchQuery, first });
+  if (res.errors) {
+    throw new Error(res.errors.map((e: any) => e.message).join(", "));
+  }
+  return res.data?.products ?? { edges: [] };
 }
 
-export async function fetchFeaturedProducts(limit = 8) {
-  const query = /* GraphQL */ `
-    query Products($limit: Int!) {
-      products(first: $limit) {
-        edges {
-          node {
-            id
-            title
-            handle
-            images(first:1) { edges { node { url altText } } }
-            variants(first:1) { edges { node { price } } }
-          }
+export async function fetchProductsList(limit = 24) {
+  const gql = `query Products($limit: Int!) {
+    products(first: $limit) {
+      edges {
+        node {
+          id
+          title
+          handle
+          images(first: 1) { edges { node { url altText } } }
+          variants(first: 1) { edges { node { priceV2 { amount currencyCode } } } }
+          tags
+          createdAt
         }
       }
     }
-  `;
-  const data = await storefrontFetch(query, { limit });
-  return data.products;
-}
+  }`;
 
-export async function fetchProductByHandle(handle: string) {
-  const query = /* GraphQL */ `
-    query ProductByHandle($handle: String!) {
-      productByHandle(handle: $handle) {
-        id
-        title
-        description
-      }
-    }
-  `;
-  const data = await storefrontFetch(query, { handle });
-  return data.productByHandle;
-}
+  const res = await shopifyFetch(gql, { limit });
+  if (res.errors) {
+    throw new Error(res.errors.map((e: any) => e.message).join(", "));
+  }
 
-export async function fetchProductsByQuery(q: string, limit = 6) {
-  const query = /* GraphQL */ `
-    query SearchProducts($query: String!, $limit: Int!) {
-      products(first: $limit, query: $query) {
-        edges {
-          node {
-            id
-            title
-            handle
-            tags
-            images(first:1) { edges { node { url altText } } }
-            variants(first:1) { edges { node { price } } }
-          }
-        }
-      }
-    }
-  `;
-  const data = await storefrontFetch(query, { query: q, limit });
-  return data.products;
+  const edges = res.data?.products?.edges ?? [];
+  return edges.map((e: any, idx: number) => {
+    const node = e.node || {};
+    const image = node.images?.edges?.[0]?.node?.url || "/assets/product-1.jpg";
+    const variant = node.variants?.edges?.[0]?.node;
+    const price = variant?.priceV2?.amount ?? "0.00";
+    const currency = variant?.priceV2?.currencyCode ?? "INR";
+    return {
+      id: node.id || `shopify-${idx}`,
+      title: node.title || "Untitled",
+      handle: node.handle || "",
+      image,
+      price,
+      currency,
+      badge: "",
+      rating: 4.6,
+    };
+  });
 }

@@ -1,28 +1,30 @@
 export default function TrustBar() {
   return (
-    <div className="bg-white rounded-lg p-6 mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-      <div className="flex items-center gap-3">
-        <span className="text-[var(--color-brand)]">📦</span>
-        <div>
-          <div className="font-semibold">Safe Shipping</div>
-          <div className="text-sm">Our plants arrive healthy and well-packaged</div>
-        </div>
-      </div>
-      <div className="flex items-center gap-3">
-        <span className="text-[var(--color-brand)]">🌿</span>
-        <div>
-          <div className="font-semibold">Healthy Plant Guarantee</div>
-          <div className="text-sm">30-day guarantee on all plants</div>
-        </div>
-      </div>
-      <div className="flex items-center gap-3">
-        <span className="text-[var(--color-brand)]">⚡</span>
-        <div>
-          <div className="font-semibold">24/7 Support</div>
-          <div className="text-sm">We're here to help</div>
+    <div className="border-t border-b border-neutral-200 py-4 mt-4">
+      <div className="container mx-auto px-4">
+
+        <div className="grid grid-cols-3 text-center text-sm font-medium">
+
+          {/* Safe Shipping */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+            <span className="text-[var(--color-brand)] text-lg">📦</span>
+            <span>Safe Shipping</span>
+          </div>
+
+          {/* Guarantee */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+            <span className="text-[var(--color-brand)] text-lg">🌿</span>
+            <span>Healthy Plant Guarantee</span>
+          </div>
+
+          {/* Support */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2">
+            <span className="text-[var(--color-brand)] text-lg">📞</span>
+            <span>24/7 Support</span>
+          </div>
+
         </div>
       </div>
     </div>
   );
 }
-

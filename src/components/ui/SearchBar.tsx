@@ -101,8 +101,8 @@ export default function SearchBar() {
 
   return (
     <div className="ss-search-wrapper relative">
-      <div className="flex items-center bg-white rounded-lg" style={{ height: 48 }}>
-        <svg className="ml-3 mr-2 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none">
+      <div className="flex items-center bg-white dark:bg-[#0a1420] border border-gray-200 dark:border-gray-700 rounded-xl transition-all duration-200 hover:border-gray-300 dark:hover:border-gray-600 focus-within:border-[var(--color-brand)] focus-within:shadow-md" style={{ height: 48 }}>
+        <svg className="ml-4 mr-3 text-gray-400 dark:text-gray-500 flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none">
           <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           <circle cx="11" cy="11" r="6" stroke="currentColor" strokeWidth="1.5" />
         </svg>
@@ -112,19 +112,21 @@ export default function SearchBar() {
           role="combobox"
           aria-expanded={open}
           aria-controls="search-listbox"
-          placeholder="Search plants, succulents, care tips…"
+          placeholder="Search plants, succulents…"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
             setActive(-1);
           }}
           onKeyDown={onKeyDown}
-          className="flex-1 px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none"
+          className="flex-1 px-1 py-2 text-sm placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none bg-transparent text-[var(--color-text)]"
           style={{ minHeight: 44 }}
         />
         {query.length > 0 && (
-          <button onClick={clear} aria-label="Clear search" className="p-2 mr-2">
-            ❌
+          <button onClick={clear} aria-label="Clear search" className="p-2 mr-2 flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-[#0f1f2e] transition-colors flex-shrink-0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M18 6L6 18M6 6l12 12" stroke="var(--icon-color, #2B2B2B)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
         )}
       </div>
@@ -134,17 +136,17 @@ export default function SearchBar() {
         <div
           id="search-listbox"
           role="listbox"
-          className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 max-h-72 overflow-auto"
+          className="absolute left-0 right-0 mt-3 bg-white dark:bg-[#0a1420] rounded-xl shadow-xl dark:shadow-2xl z-50 max-h-80 overflow-auto border border-gray-100 dark:border-gray-700"
           style={{ borderRadius: 14 }}
         >
           {loading && (
-            <div className="p-4 space-y-3">
+            <div className="p-5 space-y-4">
               {[...Array(3)].map((_, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-200 rounded" />
-                  <div className="flex-1 space-y-2">
-                    <div className="h-3 bg-gray-200 rounded w-3/4" />
-                    <div className="h-3 bg-gray-200 rounded w-1/4" />
+                <div key={i} className="flex items-center gap-4 animate-pulse">
+                  <div className="w-14 h-14 bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-600 rounded-lg flex-shrink-0" />
+                  <div className="flex-1 space-y-3">
+                    <div className="h-3 bg-gradient-to-r from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-600 rounded w-3/4" />
+                    <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded w-1/2" />
                   </div>
                 </div>
               ))}
@@ -152,7 +154,11 @@ export default function SearchBar() {
           )}
 
           {!loading && results.length === 0 && (
-            <div className="p-4 text-sm text-gray-600">No plants found 🌱</div>
+            <div className="p-6 text-center">
+              <div className="text-4xl mb-2">🌱</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">No plants found</div>
+              <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">Try searching for a different plant</div>
+            </div>
           )}
 
           {!loading &&
@@ -165,7 +171,7 @@ export default function SearchBar() {
                 return (
                   <>
                     {r.title.slice(0, idx)}
-                    <span className="text-[var(--color-secondary)]">{r.title.slice(idx, idx + q.length)}</span>
+                    <span className="font-semibold text-[var(--color-brand)]">{r.title.slice(idx, idx + q.length)}</span>
                     {r.title.slice(idx + q.length)}
                   </>
                 );
@@ -175,17 +181,25 @@ export default function SearchBar() {
                   <div
                     role="option"
                     aria-selected={active === idx}
-                    className={`flex items-center gap-3 p-3 hover:bg-[var(--color-bg)] ${active === idx ? "bg-[var(--color-bg)]" : ""}`}
+                    className={`flex items-center gap-4 px-5 py-4 transition-colors border-b border-gray-50 dark:border-gray-700 last:border-b-0 ${
+                      active === idx 
+                        ? "bg-[var(--color-bg)] dark:bg-[#0f1f2e]" 
+                        : "hover:bg-gray-50 dark:hover:bg-[#0f1f2e]"
+                    }`}
                   >
-                    <div className="w-12 h-12 relative rounded" style={{ overflow: "hidden", borderRadius: 8 }}>
+                    <div className="w-14 h-14 relative rounded-lg flex-shrink-0 overflow-hidden border border-gray-100 dark:border-gray-600">
                       {r.image ? (
-                        <Image src={r.image} alt={`${r.title} thumbnail`} width={48} height={48} style={{ objectFit: "cover" }} />
+                        <Image src={r.image} alt={`${r.title} thumbnail`} width={56} height={56} style={{ objectFit: "cover" }} />
                       ) : (
-                        <div className="w-12 h-12 bg-gray-200" />
+                        <div className="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600" />
                       )}
                     </div>
-                    <div className="flex-1 text-sm">{highlighted}</div>
-                    <div className="text-sm font-medium">{r.price ? `$${r.price}` : ""}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium text-[var(--color-text)]">{highlighted}</div>
+                    </div>
+                    <div className={`text-sm font-semibold flex-shrink-0 ${r.price ? "text-[var(--color-brand)]" : "text-gray-400 dark:text-gray-500"}`}>
+                      {r.price ? `₹${r.price}` : "—"}
+                    </div>
                   </div>
                 </Link>
               );
