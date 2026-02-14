@@ -18,6 +18,9 @@ export async function GET(req: Request) {
       process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_API;
     if (shopDomain && token) {
       const products = await fetchProductsByQuery(q, 6);
+console.log("Shopify Raw Response:");
+  console.log(JSON.stringify(products, null, 2));
+      
       // Normalize shape to { title, handle, price, image }
       const results = products.edges.map((e: any) => {
         const node = e.node;
@@ -25,6 +28,7 @@ export async function GET(req: Request) {
           id: node.id,
           title: node.title,
           handle: node.handle,
+          type:node.productType,
           price: node.variants?.edges?.[0]?.node?.priceV2?.amount ?? null,
           image: node.images?.edges?.[0]?.node?.url ?? null
         };

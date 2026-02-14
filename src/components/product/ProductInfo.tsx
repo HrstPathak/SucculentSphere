@@ -8,6 +8,13 @@ import { showSuccessToast } from "../../lib/toast";
 export default function ProductInfo({ product }: { product: any }) {
   const [qty, setQty] = useState(1);
   const { addToCart } = useCart();
+  const cartItem = {
+    id: String(product?.id ?? ""),
+    title: product?.title || "Untitled Product",
+    price: String(product?.price ?? "0.00"),
+    image: product?.image || "/assets/product-1.jpg",
+    handle: product?.handle || ""
+  };
 
   return (
     <div>

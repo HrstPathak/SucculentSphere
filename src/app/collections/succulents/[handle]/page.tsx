@@ -1,9 +1,11 @@
+import { notFound } from "next/navigation";
 import { mockProducts } from "../../../../data/mockProducts";
 import ImageGallery from "../../../../components/product/ImageGallery";
 import ProductInfo from "../../../../components/product/ProductInfo";
 import ProductTabs from "../../../../components/product/ProductTabs";
 import RecommendedProducts from "../../../../components/product/RecommendedProducts";
 import TrustBar from "../../../../components/TrustBar";
+import { fetchProductByHandle } from "../../../../lib/shopify";
 
 export const revalidate = 86400;
 
@@ -21,8 +23,24 @@ function buildProductJson(p: any) {
   };
 }
 
-export default function ProductPage({ params }: { params: { handle: string } }) {
-  const product = mockProducts.find((p) => p.handle === params.handle) ?? mockProducts[0];
+export default async function ProductPage({ params }: { params: { handle?: string } | Promise<{ handle?: string }> }) {
+  const resolvedParams = await Promise.resolve(params);
+  const handle = resolvedParams?.handle ?? "";
+  let product = null;
+
+  try {
+    product = await fetchProductByHandle(handle);
+  } catch (error) {
+    console.error("Failed to fetch Shopify product by handle:", error);
+  }
+
+  if (!product) {
+    product = mockProducts.find((p) => p.handle === handle) ?? null;
+  }
+
+  if (!product) {
+    notFound();
+  }
 
   const productJson = buildProductJson(product);
 

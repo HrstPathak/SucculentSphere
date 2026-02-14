@@ -11,9 +11,18 @@ import { showSuccessToast } from "../../lib/toast";
 export default function ProductCard({ product }: { product: Product }) {
   const [adding, setAdding] = useState(false);
   const { addToCart } = useCart();
+  const productHref = product.handle ? `/collections/succulents/${product.handle}` : "/collections/succulents";
+
+  const cartItem = {
+    id: String(product.id ?? ""),
+    title: product.title || "Untitled Product",
+    price: String(product.price ?? "0.00"),
+    image: product.image || "/assets/product-1.jpg",
+    handle: product.handle || ""
+  };
 
   return (
-    <Link href={`/collections/succulents/${product.handle}`} aria-label={`View ${product.title} details`} className="group">
+    <Link href={productHref} aria-label={`View ${product.title} details`} className="group">
       <article
         className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md dark:shadow-xl transform transition-all duration-300 md:group-hover:scale-105 md:group-hover:shadow-xl dark:md:group-hover:shadow-emerald-900/50 border border-gray-100 dark:border-gray-700"
         tabIndex={0}

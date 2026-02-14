@@ -101,3 +101,65 @@ export async function fetchProductsList(limit = 24) {
     };
   });
 }
+
+function normalizeHandle(input: unknown): string {
+  const raw = Array.isArray(input) ? input[0] : input;
+  if (typeof raw !== "string") return "";
+
+  let value = raw.trim();
+  if (!value) return "";
+
+  try {
+    value = decodeURIComponent(value);
+  } catch {}
+
+  value = value.replace(/^\/+|\/+$/g, "");
+  if (value.includes("/")) {
+    value = value.split("/").pop() || "";
+  }
+
+  return value.trim();
+}
+
+export async function fetchProductByHandle(handleInput: unknown) {
+  const handle = normalizeHandle(handleInput);
+  if (!handle) return null;
+
+  const gql = `query ProductByHandle($handle: String!) {
+    productByHandle(handle: $handle) {
+      id
+      title
+      handle
+      descriptionHtml
+      images(first: 1) { edges { node { url altText } } }
+      variants(first: 1) { edges { node { priceV2 { amount currencyCode } } } }
+      tags
+      createdAt
+    }
+  }`;
+
+  const res = await shopifyFetch(gql, { handle });
+  if (res.errors) {
+    throw new Error(res.errors.map((e: any) => e.message).join(", "));
+  }
+
+  const node = res.data?.productByHandle;
+  if (!node) return null;
+
+  const image = node.images?.edges?.[0]?.node?.url || "/assets/product-1.jpg";
+  const variant = node.variants?.edges?.[0]?.node;
+  const price = variant?.priceV2?.amount ?? "0.00";
+  const currency = variant?.priceV2?.currencyCode ?? "INR";
+
+  return {
+    id: node.id,
+    title: node.title || "Untitled",
+    handle: node.handle || handle,
+    image,
+    price,
+    currency,
+    badge: "",
+    rating: 4.6,
+    description: node.descriptionHtml || "",
+  };
+}
