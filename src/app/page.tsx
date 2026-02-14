@@ -5,15 +5,27 @@ import BrandStory from "../components/home/BrandStory";
 import InstagramFeed from "../components/home/InstagramFeed";
 import Testimonials from "../components/home/Testimonials";
 import { mockProducts } from "../data/mockProducts";
+import { fetchProductsList } from "../lib/products";
 
-export const revalidate = 86400; // static regenerate daily
+export const revalidate = 86400;
 
-export default function Home() {
+export default async function Home() {
+  let bestSellers = mockProducts;
+
+  try {
+    const supabaseProducts = await fetchProductsList(8);
+    if (supabaseProducts.length > 0) {
+      bestSellers = supabaseProducts;
+    }
+  } catch {
+    // Keep mock fallback if Supabase is not configured or unavailable.
+  }
+
   return (
     <>
       <header />
       <HeroSection />
-      
+
       <section className="py-16 md:py-24 lg:py-32 bg-gradient-to-b from-transparent via-[var(--color-bg)] to-transparent">
         <div className="container mx-auto px-4">
           <CategoryGrid />
@@ -26,7 +38,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-serif text-center text-[var(--color-text)]">Best Sellers</h2>
             <p className="text-center text-gray-600 dark:text-gray-400 mt-2">Handpicked favorites loved by our customers</p>
           </div>
-          <BestSellerGrid products={mockProducts} />
+          <BestSellerGrid products={bestSellers} />
         </div>
       </section>
 
