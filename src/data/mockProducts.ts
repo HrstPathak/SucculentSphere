@@ -8,7 +8,9 @@ export const mockProducts = [
     image: "/assets/product-1.jpg",
     badge: "Best Seller",
     rating: 4.8,
-    availability: "InStock"
+    availability: "InStock",
+    description:
+      "A graceful rosette succulent with soft pastel tones. Echeveria Harmony thrives in bright light and minimal watering, making it perfect for beginners seeking effortless elegance."
   },
   {
     id: "gid://shopify/Product/2",
@@ -19,7 +21,9 @@ export const mockProducts = [
     image: "/assets/product-2.jpg",
     badge: "New",
     rating: 4.6,
-    availability: "InStock"
+    availability: "InStock",
+    description:
+      "A modern ceramic planter with clean geometric lines. Designed to elevate your succulents with a minimalist aesthetic while ensuring proper drainage and airflow."
   },
   {
     id: "gid://shopify/Product/3",
@@ -30,7 +34,9 @@ export const mockProducts = [
     image: "/assets/product-3.jpg",
     badge: "Limited",
     rating: 4.9,
-    availability: "InStock"
+    availability: "InStock",
+    description:
+      "A curated trio of premium succulents paired with elegant pots. This limited-edition set brings refined greenery and serene charm to any living or workspace."
   },
   {
     id: "gid://shopify/Product/4",
@@ -41,7 +47,9 @@ export const mockProducts = [
     image: "/assets/product-4.jpg",
     badge: "",
     rating: 4.5,
-    availability: "InStock"
+    availability: "InStock",
+    description:
+      "A striking low-maintenance succulent featuring bold white stripes. Haworthia Zebra thrives in low to moderate light and is ideal for compact indoor spaces."
   }
 ];
 

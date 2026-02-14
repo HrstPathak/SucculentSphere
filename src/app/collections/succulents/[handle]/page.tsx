@@ -50,7 +50,7 @@ export default function ProductPage({ params }: { params: { handle: string } }) 
         </div>
 
         <div className="mt-12">
-          <ProductTabs care={`Light: Bright indirect light. Water: Every 2 weeks.`} description={product.description || "<p>No description</p>"} shipping={"Shipping within 3-5 business days."} />
+          <ProductTabs care={`Light: Bright indirect light. Water: Every 2 weeks.`} description={product?.description || "<p>No description</p>"} shipping={"Shipping within 3-5 business days."} />
         </div>
 
         <div className="mt-12">

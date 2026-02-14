@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Head from "next/head";
 import Header from "../components/layout/Header";
 import Providers from "../components/Providers";
+import Chatbot from "../components/chatbot/Chatbot";
 
 export const metadata = {
   title: "Succulent Sphere — Elevate Your Space With Living Art",
@@ -36,12 +37,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           rel="stylesheet"
         />
         <meta name="theme-color" content="#F5F3EF" />
-        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('ss_theme');if(t==='dark'){document.documentElement.classList.add('dark');}else if(t==='light'){document.documentElement.classList.remove('dark');}else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark');}}catch(e){} })();` }} />
       </Head>
       <body>
         <Providers>
           <Header />
           <main>{children}</main>
+          <Chatbot />
         </Providers>
       </body>
     </html>
