@@ -11,8 +11,8 @@ export default function AboutPage() {
     <main className="bg-[var(--color-bg)] text-[var(--color-text)]">
       {/* Hero */}
       <section className="relative">
-        <div className="relative h-56 md:h-96 lg:h-[420px] overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/about-hero.jpg')] bg-center bg-cover" />
+        <div className="relative h-56 md:h-96 lg:h-[420px]  overflow-hidden">
+          <div className="absolute inset-0 bg-[url('/images/brand-lifestyle.png')] bg-center bg-cover opacity-60" />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/80" />
 
           <div className="container mx-auto px-4 relative h-full flex items-center">

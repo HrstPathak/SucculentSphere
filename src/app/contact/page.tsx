@@ -15,7 +15,7 @@ export default function ContactPage() {
         <div className="relative max-w-3xl mx-auto mb-8">
 
           <div className="rounded overflow-hidden shadow-sm">
-            <div className="relative h-56 md:h-72 bg-[url('/images/contact-hero.jpg')] bg-center bg-cover" />
+            <div className="relative h-56 md:h-72 bg-[url('/images/contact.png')] bg-center bg-cover opacity-50" />
 
             {/* Overlay Text */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 bg-black/20">
@@ -36,7 +36,7 @@ export default function ContactPage() {
           <a
             href={whatsappLink}
             target="_blank"
-            className="block bg-white rounded-lg p-4 shadow-sm flex items-start justify-between"
+            className="contact-ripple-card block bg-white rounded-lg p-4 shadow-sm flex items-start justify-between"
           >
             <div>
               <div className="text-base font-medium">Chat with Us</div>
@@ -50,7 +50,7 @@ export default function ContactPage() {
           {/* Email */}
           <a
             href="mailto:SucculentSphere@gmail.com"
-            className="block bg-white rounded-lg p-4 shadow-sm flex items-start justify-between"
+            className="contact-ripple-card block bg-white rounded-lg p-4 shadow-sm flex items-start justify-between"
           >
             <div>
               <div className="text-base font-medium">Email Us</div>
@@ -64,7 +64,7 @@ export default function ContactPage() {
           {/* Call */}
           <a
             href="tel:+919458321209"
-            className="block bg-white rounded-lg p-4 shadow-sm flex items-start justify-between"
+            className="contact-ripple-card block bg-white rounded-lg p-4 shadow-sm flex items-start justify-between"
           >
             <div>
               <div className="text-base font-medium">Call Us</div>
