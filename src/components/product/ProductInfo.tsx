@@ -3,7 +3,7 @@ import QuantitySelector from "./QuantitySelector";
 import TrustBar from "../TrustBar";
 import { useState } from "react";
 import { useCart } from "../../context/CartContext";
-import { toast } from "react-toastify";
+import { showSuccessToast } from "../../lib/toast";
 
 export default function ProductInfo({ product }: { product: any }) {
   const [qty, setQty] = useState(1);
@@ -34,7 +34,7 @@ export default function ProductInfo({ product }: { product: any }) {
           className="w-full md:w-auto bg-[var(--color-brand)] text-white px-6 py-3 rounded text-sm"
           onClick={() => {
             addToCart({ id: product.id, title: product.title, price: product.price, image: product.image, handle: product.handle }, qty);
-            toast.success(`${product.title} added to cart`);
+            showSuccessToast(`${product.title} added to cart`);
           }}
         >
           Add to Cart
@@ -47,4 +47,3 @@ export default function ProductInfo({ product }: { product: any }) {
     </div>
   );
 }
-
