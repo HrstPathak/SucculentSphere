@@ -1,5 +1,5 @@
 /**
- * Chatbot knowledge base — train the AI with your site's data.
+ * Chatbot knowledge base - train the AI with your site's data.
  * Update this file to keep the assistant in sync with products, policies, and content.
  */
 
@@ -15,7 +15,7 @@ type ProductEntry = {
   url: string;
 };
 
-// ——— PRODUCTS (from mock data; can be overridden by Shopify) ———
+// PRODUCTS (from mock data; can be overridden by Supabase)
 export const PRODUCTS = mockProducts.map((p) => ({
   name: p.title,
   handle: p.handle,
@@ -26,10 +26,10 @@ export const PRODUCTS = mockProducts.map((p) => ({
   url: `/collections/succulents/${p.handle}`,
 }));
 
-/** Fetch live products from Shopify if configured; otherwise use PRODUCTS */
+/** Fetch live products from Supabase if configured; otherwise use PRODUCTS */
 export async function getProductsForContext(): Promise<ProductEntry[]> {
   try {
-    const { fetchProductsList } = await import("../lib/shopify");
+    const { fetchProductsList } = await import("../lib/products");
     const list = await fetchProductsList(24);
     return list.map((node: any) => ({
       name: node.title || "Untitled",
@@ -45,17 +45,16 @@ export async function getProductsForContext(): Promise<ProductEntry[]> {
   }
 }
 
-// ——— PLANT INFO (per product or general) ———
 export const PLANT_CARE = {
   general: {
     light: "Bright indirect light is best. Avoid direct hot sun.",
-    watering: "Deep but infrequent — let soil dry between waterings. Usually every 2–4 weeks.",
+    watering: "Deep but infrequent - let soil dry between waterings. Usually every 2-4 weeks.",
     soil: "Well-draining mix. Use cactus/succulent soil. Avoid garden soil.",
-    temperature: "Keep above 50°F. Avoid cold drafts and hot radiators.",
+    temperature: "Keep above 50F. Avoid cold drafts and hot radiators.",
   },
   byPlant: {
     "Echeveria Harmony": "Needs bright light, minimal water. Leaves may change color with sunlight.",
-    "Haworthia Zebra": "Tolerates lower light. Water every 2–3 weeks.",
+    "Haworthia Zebra": "Tolerates lower light. Water every 2-3 weeks.",
     "Geometric Planter": "Decorative pot. Pair with any succulent. Has drainage.",
     "Luxury Succulent Set": "Curated mix. Includes care tips. Perfect for gifting.",
   },
@@ -66,22 +65,19 @@ export const PLANT_CARE = {
   },
 };
 
-// ——— SHIPPING ———
 export const SHIPPING = {
-  time: "3–5 business days",
+  time: "3-5 business days",
   note: "Shipping is calculated at checkout based on address.",
   packaging: "Plants are custom packaged with sustainable materials for safe arrival.",
 };
 
-// ——— CHECKOUT ———
 export const CHECKOUT = {
-  steps: "Add to cart → View cart → Proceed to checkout → Enter shipping & payment → Place order",
+  steps: "Add to cart -> View cart -> Proceed to checkout -> Enter shipping & payment -> Place order",
   payment: "Secure payment at checkout.",
   coupons: "You can enter coupon codes in the cart. Apply before checkout.",
   shippingCalc: "Shipping cost is calculated at checkout based on your location.",
 };
 
-// ——— ABOUT US ———
 export const ABOUT = {
   tagline: "Cultivating beauty, inspiring tranquility.",
   story:
@@ -93,7 +89,6 @@ export const ABOUT = {
   },
 };
 
-// ——— CONTACT ———
 export const CONTACT = {
   email: "SucculentSphere@gmail.com",
   phone: "+91 94583 21209",
@@ -110,12 +105,11 @@ export const CONTACT = {
   },
 };
 
-// ——— Build full knowledge string for the AI ———
 export async function buildKnowledgeContextAsync(): Promise<string> {
   const products = await getProductsForContext();
-  const productList = products.map(
-    (p) => `- ${p.name}: $${p.price} ${p.currency} — ${p.url}${p.badge ? ` (${p.badge})` : ""}`
-  ).join("\n");
+  const productList = products
+    .map((p) => `- ${p.name}: $${p.price} ${p.currency} - ${p.url}${p.badge ? ` (${p.badge})` : ""}`)
+    .join("\n");
 
   const plantCareByPlant = Object.entries(PLANT_CARE.byPlant)
     .map(([name, tip]) => `- ${name}: ${tip}`)
@@ -129,13 +123,13 @@ export async function buildKnowledgeContextAsync(): Promise<string> {
 PRODUCTS (name, price, URL):
 ${productList}
 
-PLANT CARE — General:
+PLANT CARE - General:
 - Light: ${PLANT_CARE.general.light}
 - Watering: ${PLANT_CARE.general.watering}
 - Soil: ${PLANT_CARE.general.soil}
 - Temperature: ${PLANT_CARE.general.temperature}
 
-PLANT CARE — By plant:
+PLANT CARE - By plant:
 ${plantCareByPlant}
 
 COMMON PROBLEMS:
@@ -169,11 +163,10 @@ CONTACT:
 `.trim();
 }
 
-/** Sync version using PRODUCTS (for import in modules that can't await) */
 export function buildKnowledgeContext(): string {
-  const productList = PRODUCTS.map(
-    (p) => `- ${p.name}: $${p.price} ${p.currency} — ${p.url}${p.badge ? ` (${p.badge})` : ""}`
-  ).join("\n");
+  const productList = PRODUCTS
+    .map((p) => `- ${p.name}: $${p.price} ${p.currency} - ${p.url}${p.badge ? ` (${p.badge})` : ""}`)
+    .join("\n");
 
   const plantCareByPlant = Object.entries(PLANT_CARE.byPlant)
     .map(([name, tip]) => `- ${name}: ${tip}`)
@@ -187,13 +180,13 @@ export function buildKnowledgeContext(): string {
 PRODUCTS (name, price, URL):
 ${productList}
 
-PLANT CARE — General:
+PLANT CARE - General:
 - Light: ${PLANT_CARE.general.light}
 - Watering: ${PLANT_CARE.general.watering}
 - Soil: ${PLANT_CARE.general.soil}
 - Temperature: ${PLANT_CARE.general.temperature}
 
-PLANT CARE — By plant:
+PLANT CARE - By plant:
 ${plantCareByPlant}
 
 COMMON PROBLEMS:

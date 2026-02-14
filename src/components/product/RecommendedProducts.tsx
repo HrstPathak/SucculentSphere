@@ -1,10 +1,10 @@
 "use client";
-import { mockProducts } from "../../data/mockProducts";
 import Link from "next/link";
 import Image from "next/image";
+import type { Product } from "../../data/mockProducts";
 
-export default function RecommendedProducts({ currentId }: { currentId?: string }) {
-  const recs = mockProducts.filter((p) => p.id !== currentId).slice(0, 4);
+export default function RecommendedProducts({ currentId, products }: { currentId?: string; products: Product[] }) {
+  const recs = products.filter((p) => p.id !== currentId).slice(0, 4);
 
   return (
     <div>
@@ -23,4 +23,3 @@ export default function RecommendedProducts({ currentId }: { currentId?: string 
     </div>
   );
 }
-
