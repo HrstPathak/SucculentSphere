@@ -6,7 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import QuickAddButton from "./QuickAddButton";
 import { useCart } from "../../context/CartContext";
-import { toast } from "react-toastify";
+import { showSuccessToast } from "../../lib/toast";
 
 export default function ProductCard({ product }: { product: Product }) {
   const [adding, setAdding] = useState(false);
@@ -29,17 +29,14 @@ export default function ProductCard({ product }: { product: Product }) {
             priority={false}
             className="transition-transform duration-300"
           />
-          {/* Badge */}
           {product.badge && (
             <span className="absolute top-3 left-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-lg">{product.badge}</span>
           )}
-          {/* Rating Badge */}
           <div className="absolute top-3 right-3 bg-white dark:bg-gray-800 rounded-lg px-2 py-1 shadow-md">
             <div className="flex items-center gap-1">
               <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{product.rating}★</span>
             </div>
           </div>
-          {/* Hover overlay */}
           <div className="absolute inset-0 opacity-0 md:group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-200 bg-black/40 flex items-end p-4 backdrop-blur-sm">
             <div className="w-full text-white">
               <div className="flex items-center justify-between mb-3">
@@ -66,7 +63,7 @@ export default function ProductCard({ product }: { product: Product }) {
                 e.stopPropagation();
                 setAdding(true);
                 addToCart({ id: product.id, title: product.title, price: product.price, image: product.image, handle: product.handle }, 1);
-                toast.success(`${product.title} added to cart`);
+                showSuccessToast(`${product.title} added to cart`);
                 setTimeout(() => setAdding(false), 800);
               }}
               aria-label={`Add ${product.title} to cart`}
@@ -79,4 +76,3 @@ export default function ProductCard({ product }: { product: Product }) {
     </Link>
   );
 }
-
