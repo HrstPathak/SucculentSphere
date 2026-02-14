@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 const categories = [
-  { title: "Succulent Plants", href: "/collections/succulents", img: "/assets/category-1.jpg" },
-  { title: "Elegant Pots", href: "/collections/pots", img: "/assets/category-2.jpg" },
-  { title: "Gifting Collection", href: "/collections/gifting", img: "/assets/category-3.jpg" },
-  { title: "Beginner Friendly", href: "/collections/beginner", img: "/assets/category-4.jpg" }
+  { title: "Succulent Plants", href: "/collections/succulents", img: "/images/Category_SucculentPlant.png" },
+  { title: "Elegant Pots", href: "/collections/pots", img: "/images/Category_ElegantPots.png" },
+  { title: "Gifting Collection", href: "/collections/gifting", img: "/images/Category_GiftCollection.png" },
+  { title: "Beginner Friendly", href: "/collections/beginner", img: "/images/Category_BeginnerFriendly.png" }
 ];
 
 export default function CategoryGrid() {

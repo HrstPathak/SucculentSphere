@@ -52,3 +52,49 @@ button:focus, a:focus {
   outline: 3px solid rgba(52,78,65,0.15);
   outline-offset: 2px;
 }
+
+/* Contact cards: soft ripple on hover/focus with click pulse */
+.contact-ripple-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 180ms ease, box-shadow 220ms ease;
+}
+
+.contact-ripple-card::before {
+  content: "";
+  position: absolute;
+  width: 14rem;
+  height: 14rem;
+  left: 50%;
+  top: 50%;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(52, 78, 65, 0.18) 0%, rgba(52, 78, 65, 0.08) 35%, rgba(52, 78, 65, 0) 70%);
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+  transition: transform 420ms ease, opacity 320ms ease;
+}
+
+.contact-ripple-card:hover::before,
+.contact-ripple-card:focus-visible::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.contact-ripple-card:active::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.35);
+  transition-duration: 140ms;
+}
+
+.contact-ripple-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.contact-ripple-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(52, 78, 65, 0.12);
+}

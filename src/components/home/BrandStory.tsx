@@ -14,7 +14,7 @@ export default function BrandStory() {
           </p>
         </div>
         <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-xl border border-gray-100 dark:border-gray-700">
-          <Image src="/assets/brand-lifestyle.jpg" alt="Our story lifestyle" fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 50vw" className="hover:scale-105 transition-transform duration-500" />
+          <Image src="/images/brand-lifestyle.png" alt="Our story lifestyle" fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 50vw" className="hover:scale-105 transition-transform duration-500" />
         </div>
       </div>
     </section>
